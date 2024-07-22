@@ -23,7 +23,7 @@ class _ListScreenState extends State<ListScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          '도서모록 앱',
+          '도서목록 앱',
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
@@ -67,7 +67,7 @@ class _ListScreenState extends State<ListScreen> {
               },
             );
           }
-          return const CircularProgressIndicator();
+          return const Center(child: CircularProgressIndicator());
         },
       ),
     );
