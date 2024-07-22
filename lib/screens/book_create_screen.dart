@@ -13,111 +13,113 @@ void showCreateBookDialog(BuildContext context) {
                 fontSize: 25, fontWeight: FontWeight.bold, color: Colors.amber),
           ),
           content: Form(
-            child: Container(
-              height: MediaQuery.of(context).size.height * 0.3,
-              width: MediaQuery.of(context).size.width * 0.5,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          width: 5,
-                          child: Center(
-                            child: Text(
-                              '제목',
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
+            child: SingleChildScrollView(
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.4,
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        const Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            width: 5,
+                            child: Center(
+                              child: Text(
+                                '제목',
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: TextFormField(),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          width: 5,
-                          child: Center(
-                            child: Text(
-                              '저자',
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(),
                         ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: TextFormField(),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          width: 5,
-                          child: Center(
-                            child: Text(
-                              '출판사',
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: TextFormField(),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Expanded(
-                        flex: 1,
-                        child: SizedBox(
-                          width: 5,
-                          child: Center(
-                            child: Text(
-                              '이미지 url',
-                              style: TextStyle(
-                                  fontSize: 17, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        flex: 3,
-                        child: TextFormField(),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  TextButton(
-                    child: const Text(
-                      '제목 중복 검사하기',
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
+                      ],
                     ),
-                    onPressed: () {
-                      // 서버로 부터 데이터 중복 검사
-                    },
-                  ),
-                ],
+                    Row(
+                      children: [
+                        const Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            width: 5,
+                            child: Center(
+                              child: Text(
+                                '저자',
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            width: 5,
+                            child: Center(
+                              child: Text(
+                                '출판사',
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        const Expanded(
+                          flex: 1,
+                          child: SizedBox(
+                            width: 5,
+                            child: Center(
+                              child: Text(
+                                '이미지 url',
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: TextFormField(),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextButton(
+                      child: const Text(
+                        '제목 중복 검사하기',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black),
+                      ),
+                      onPressed: () {
+                        // 서버로 부터 데이터 중복 검사
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
