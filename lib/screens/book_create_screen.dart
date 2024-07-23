@@ -1,3 +1,5 @@
+import 'package:book/functions/network.dart';
+import 'package:book/models/book.dart';
 import 'package:flutter/material.dart';
 
 void showCreateBookDialog(BuildContext context) {
@@ -64,16 +66,13 @@ void showCreateBookDialog(BuildContext context) {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     if (titleFormKey.currentState?.validate() ?? false) {
+                      titleFormKey.currentState?.save();
                       print('제목 유효성 검사 성공');
                       return;
-                    } else {
-                      print('제목 유효성 검사 실패');
-                      return;
                     }
-
-                    // 서버로 부터 데이터 중복 검사
+                    print('제목 유효성 검사 실패');
                   },
                 ),
               ],
@@ -86,18 +85,28 @@ void showCreateBookDialog(BuildContext context) {
                   },
                   child: const Text("취소")),
               TextButton(
-                  onPressed: () {
-                    if ((formKey.currentState?.validate() ?? false) &&
-                        (titleFormKey.currentState?.validate() ?? false)) {
+                  onPressed: () async {
+                    bool otherStatus =
+                        formKey.currentState?.validate() ?? false;
+                    bool titleStatus =
+                        titleFormKey.currentState?.validate() ?? false;
+                    if (otherStatus &&
+                        titleStatus &&
+                        (await titleCheck(title))) {
                       formKey.currentState?.save();
                       titleFormKey.currentState?.save();
+                      showCheckDialog(
+                          context,
+                          Book("",
+                              title: title,
+                              author: author,
+                              image: image,
+                              publicher: publicher));
+
                       print('전체 유효성 검사 성공');
                     } else {
                       print('전체 유효성 검사 실패');
-                      return null;
                     }
-                    print('$title, $author, $publicher, $image');
-                    showCheckDialog(context);
                   },
                   child: const Text("추가")),
             ],
@@ -106,7 +115,7 @@ void showCreateBookDialog(BuildContext context) {
       });
 }
 
-void showCheckDialog(BuildContext context) {
+void showCheckDialog(BuildContext context, Book book) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -122,9 +131,7 @@ void showCheckDialog(BuildContext context) {
                 child: const Text('취소')),
             TextButton(
                 onPressed: () {
-                  //
-
-                  // 중복되는 title 없이 데이터 전송 성공 시
+                  postBook(book);
                   Navigator.popUntil(
                       context, ModalRoute.withName('/list_screen'));
                 },
@@ -157,6 +164,12 @@ Widget titleRow(FormFieldSetter onSaved) {
               print('제목 검사 실패');
               return "값을 넣어요";
             }
+
+            bool status = titleCheck(value!);
+            if (status) {
+              print("DB에 중복되는 제목 존재");
+              return "제목 중복";
+            }
             return null;
           },
           onSaved: onSaved,
@@ -185,6 +198,9 @@ Widget authorRow(FormFieldSetter onSaved) {
         flex: 3,
         child: TextFormField(
           validator: (value) {
+            if (value?.isEmpty ?? false) {
+              return "저자를 입력하세요";
+            }
             return null;
           },
           onSaved: onSaved,
@@ -213,6 +229,9 @@ Widget imageRow(FormFieldSetter onSaved) {
         flex: 3,
         child: TextFormField(
           validator: (value) {
+            if (value?.isEmpty ?? false) {
+              return "이미지url를 입력하세요";
+            }
             return null;
           },
           onSaved: onSaved,
@@ -241,6 +260,9 @@ Widget publicherRow(FormFieldSetter onSaved) {
         flex: 3,
         child: TextFormField(
           validator: (value) {
+            if (value?.isEmpty ?? false) {
+              return "출판사를 입력하세요";
+            }
             return null;
           },
           onSaved: onSaved,
