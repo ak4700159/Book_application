@@ -1,117 +1,14 @@
 import 'package:book/functions/network.dart';
 import 'package:book/models/book.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void showCreateBookDialog(BuildContext context) {
-  GlobalKey<FormState> titleFormKey = GlobalKey<FormState>();
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  String title = "";
-  String author = "";
-  String publicher = "";
-  String image = "";
-
   showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: AlertDialog(
-            shape:
-                const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
-            title: const Text(
-              "도서 추가하기",
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.amber),
-            ),
-            content: Column(
-              children: [
-                Form(
-                    key: titleFormKey,
-                    child: titleRow((value) {
-                      title = value;
-                    })),
-                Form(
-                  key: formKey,
-                  child: Column(
-                    children: [
-                      authorRow(
-                        (value) {
-                          author = value;
-                        },
-                      ),
-                      publicherRow(
-                        (value) {
-                          publicher = value;
-                        },
-                      ),
-                      imageRow(
-                        (value) {
-                          image = value;
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                TextButton(
-                  child: const Text(
-                    '제목 중복 검사하기',
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                  onPressed: () async {
-                    if (titleFormKey.currentState?.validate() ?? false) {
-                      titleFormKey.currentState?.save();
-                      print('제목 유효성 검사 성공');
-                      return;
-                    }
-                    print('제목 유효성 검사 실패');
-                  },
-                ),
-              ],
-            ),
-            actions: [
-              TextButton(
-                  onPressed: () {
-                    print('뒤로가기');
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("취소")),
-              TextButton(
-                  onPressed: () async {
-                    bool otherStatus =
-                        formKey.currentState?.validate() ?? false;
-                    bool titleStatus =
-                        titleFormKey.currentState?.validate() ?? false;
-                    if (otherStatus &&
-                        titleStatus &&
-                        (await titleCheck(title))) {
-                      formKey.currentState?.save();
-                      titleFormKey.currentState?.save();
-                      showCheckDialog(
-                          context,
-                          Book("",
-                              title: title,
-                              author: author,
-                              image: image,
-                              publicher: publicher));
-
-                      print('전체 유효성 검사 성공');
-                    } else {
-                      print('전체 유효성 검사 실패');
-                    }
-                  },
-                  child: const Text("추가")),
-            ],
-          ),
-        );
+        return const CreateBookScreen();
       });
 }
 
@@ -121,7 +18,11 @@ void showCheckDialog(BuildContext context, Book book) {
       builder: (BuildContext context) {
         return AlertDialog(
           shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
-          title: const Text('추가하기'),
+          title: const Text(
+            '추가하기',
+            style: TextStyle(
+                color: Colors.red, fontSize: 15, fontWeight: FontWeight.bold),
+          ),
           content: const Text('추가하시겠습니까?'),
           actions: [
             TextButton(
@@ -161,14 +62,7 @@ Widget titleRow(FormFieldSetter onSaved) {
         child: TextFormField(
           validator: (value) {
             if (value?.isEmpty ?? false) {
-              print('제목 검사 실패');
-              return "값을 넣어요";
-            }
-
-            bool status = titleCheck(value!);
-            if (status) {
-              print("DB에 중복되는 제목 존재");
-              return "제목 중복";
+              return "제목을 입력해주세요";
             }
             return null;
           },
@@ -270,4 +164,133 @@ Widget publicherRow(FormFieldSetter onSaved) {
       ),
     ],
   );
+}
+
+class CreateBookScreen extends StatefulWidget {
+  const CreateBookScreen({super.key});
+
+  @override
+  State<CreateBookScreen> createState() => _CreateBookScreenState();
+}
+
+class _CreateBookScreenState extends State<CreateBookScreen> {
+  GlobalKey<FormState> titleFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String? title;
+  String? author;
+  String? publicher;
+  String? image;
+  String? content;
+
+  bool titleStatus = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: AlertDialog(
+        surfaceTintColor: Colors.white,
+        //shadowColor: Colors.white,
+        shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+        title: const Text(
+          "도서 추가하기",
+          style: TextStyle(
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.amber),
+        ),
+        content: Column(
+          children: [
+            Form(
+                key: titleFormKey,
+                child: titleRow((value) {
+                  title = value;
+                })),
+            Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  authorRow(
+                    (value) {
+                      author = value;
+                    },
+                  ),
+                  publicherRow(
+                    (value) {
+                      publicher = value;
+                    },
+                  ),
+                  imageRow(
+                    (value) {
+                      image = value;
+                    },
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            TextButton(
+              child: Text(
+                (titleStatus ? "중복 검사 성공" : '중복 검사 실패'),
+                style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
+              ),
+              onPressed: () async {
+                if (titleFormKey.currentState?.validate() ?? false) {
+                  titleFormKey.currentState?.save();
+                  // true : 제목 중복 검사 성공 = DB에 중복되는 제목이 없음
+                  titleStatus = await titleCheck(title!);
+                  setState(() {});
+                  print('titleStatus : $titleStatus');
+                  return;
+                }
+                print('제목 유효성 검사 실패');
+              },
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+              onPressed: () {
+                print('뒤로가기');
+                Navigator.of(context).pop();
+              },
+              child: const Text("취소")),
+          TextButton(
+              onPressed: () {
+                bool otherStatus = formKey.currentState?.validate() ?? false;
+                bool titleStatus =
+                    titleFormKey.currentState?.validate() ?? false;
+                if (otherStatus && titleStatus) {
+                  formKey.currentState?.save();
+                  titleFormKey.currentState?.save();
+                  if (!this.titleStatus) {
+                    Get.snackbar(
+                      "다시",
+                      "중복 검사를 하십시오......",
+                      colorText: Colors.black,
+                      backgroundColor: Colors.white,
+                      duration: const Duration(seconds: 2),
+                      snackPosition: SnackPosition.TOP,
+                      forwardAnimationCurve: Curves.elasticInOut,
+                      reverseAnimationCurve: Curves.easeOut,
+                    );
+                    return;
+                  }
+                  showCheckDialog(
+                      context,
+                      Book(content ?? "",
+                          title: title!,
+                          author: author!,
+                          image: image!,
+                          publicher: publicher!));
+                }
+                print('전체 유효성 검사 실패');
+              },
+              child: const Text("추가")),
+        ],
+      ),
+    );
+  }
 }

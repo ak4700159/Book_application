@@ -1,7 +1,9 @@
+import 'package:book/functions/network.dart';
 import 'package:book/models/book.dart';
 import 'package:book/screens/book_create_screen.dart';
 import 'package:book/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -41,17 +43,26 @@ class _ListScreenState extends State<ListScreen> {
           PopupMenuButton(itemBuilder: (BuildContext context) {
             return [
               PopupMenuItem(
-                  child: TextButton(
-                      child: const Text('도서 추가하기'),
-                      onPressed: () {
-                        showCreateBookDialog(context);
-                      })),
+                onTap: () {
+                  showCreateBookDialog(context);
+                },
+                child: const Text(
+                  '도서 추가하기',
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                ),
+              ),
               PopupMenuItem(
-                  child: TextButton(
-                      child: const Text('도서 삭제하기'), onPressed: () {})),
+                  onTap: () {},
+                  child: const Text(
+                    '도서 삭제하기',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  )),
               PopupMenuItem(
-                  child: TextButton(
-                      child: const Text('도서 수정하기'), onPressed: () {})),
+                  onTap: () {},
+                  child: const Text(
+                    '도서 수정하기',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  )),
             ];
           }),
         ],
@@ -63,7 +74,13 @@ class _ListScreenState extends State<ListScreen> {
             return ListView.builder(
               itemCount: snapshot.data!.length,
               itemBuilder: (BuildContext context, int index) {
-                return getBookTile(snapshot.data![index], context);
+                Book book = snapshot.data![index];
+                return getBookTile(book, context, (book) {
+                  setState(() {
+                    snapshot.data?.remove(book!);
+                  });
+                  deleteBook(book?.title);
+                });
               },
             );
           }
@@ -74,7 +91,7 @@ class _ListScreenState extends State<ListScreen> {
   }
 }
 
-Container getBookTile(Book book, BuildContext context) {
+Container getBookTile(Book book, BuildContext context, Function onDeleteBook) {
   return Container(
     decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.black, width: 2))),
@@ -89,7 +106,9 @@ Container getBookTile(Book book, BuildContext context) {
         leading: Image.network(book.image),
         trailing: IconButton(
           icon: const Icon(Icons.delete),
-          onPressed: () {},
+          onPressed: () {
+            onDeleteBook(book);
+          },
         ),
       ),
     ),
