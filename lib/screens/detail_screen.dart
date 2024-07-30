@@ -17,7 +17,13 @@ class DetailScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Image.network(book.image),
+          Image.network(
+            book.image,
+            errorBuilder: (context, object, stack) {
+              return Image.network(
+                  "https://d0.awsstatic.com/Digital%20Marketing/sitemerch/sign-in/KO/Site-Merch_PAC_GuardDuty_Sign-in_KO.png");
+            },
+          ),
           Container(
             height: 2,
             color: Colors.black,

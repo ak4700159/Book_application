@@ -1,4 +1,5 @@
 import 'package:book/screens/list_screen.dart';
+import 'package:book/screens/modify_book_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       routes: {
         '/list_screen': (context) => const ListScreen(),
+        ModifyBookScreen.routeName: (context) => const ModifyBookScreen(),
       },
       title: 'Book List App',
       debugShowCheckedModeBanner: false,

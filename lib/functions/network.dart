@@ -51,6 +51,25 @@ Future<void> deleteBook(String title) async {
       print('네트워크 전송 성공');
     }
   } catch (e) {
-    print("네트워크 에러 발생 : $e");
+    print("$title 삭제 네트워크 에러 발생 : $e");
+  }
+}
+
+Future<void> putBook(Book book) async {
+  try {
+    var response = await Dio().put(
+        'https://6fh6doylz4.execute-api.ap-northeast-2.amazonaws.com/default/Book_dyamondDBFunc',
+        queryParameters: {
+          "title": book.title,
+          "author": book.author,
+          "publicher": book.publicher,
+          "image": book.image,
+          "content": book.content
+        });
+    if (response.statusCode == 200) {
+      print('네트워크 전송 성공');
+    }
+  } catch (e) {
+    print("수정 네트워크 에러 발생 : $e");
   }
 }

@@ -59,14 +59,17 @@ Widget titleRow(FormFieldSetter onSaved) {
       ),
       Expanded(
         flex: 3,
-        child: TextFormField(
-          validator: (value) {
-            if (value?.isEmpty ?? false) {
-              return "제목을 입력해주세요";
-            }
-            return null;
-          },
-          onSaved: onSaved,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: TextFormField(
+            validator: (value) {
+              if (value?.isEmpty ?? false) {
+                return "제목을 입력해주세요";
+              }
+              return null;
+            },
+            onSaved: onSaved,
+          ),
         ),
       ),
     ],
@@ -90,14 +93,17 @@ Widget authorRow(FormFieldSetter onSaved) {
       ),
       Expanded(
         flex: 3,
-        child: TextFormField(
-          validator: (value) {
-            if (value?.isEmpty ?? false) {
-              return "저자를 입력하세요";
-            }
-            return null;
-          },
-          onSaved: onSaved,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: TextFormField(
+            validator: (value) {
+              if (value?.isEmpty ?? false) {
+                return "저자를 입력하세요";
+              }
+              return null;
+            },
+            onSaved: onSaved,
+          ),
         ),
       ),
     ],
@@ -121,14 +127,17 @@ Widget imageRow(FormFieldSetter onSaved) {
       ),
       Expanded(
         flex: 3,
-        child: TextFormField(
-          validator: (value) {
-            if (value?.isEmpty ?? false) {
-              return "이미지url를 입력하세요";
-            }
-            return null;
-          },
-          onSaved: onSaved,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: TextFormField(
+            validator: (value) {
+              if (value?.isEmpty ?? false) {
+                return "이미지url를 입력하세요";
+              }
+              return null;
+            },
+            onSaved: onSaved,
+          ),
         ),
       ),
     ],
@@ -152,14 +161,17 @@ Widget publicherRow(FormFieldSetter onSaved) {
       ),
       Expanded(
         flex: 3,
-        child: TextFormField(
-          validator: (value) {
-            if (value?.isEmpty ?? false) {
-              return "출판사를 입력하세요";
-            }
-            return null;
-          },
-          onSaved: onSaved,
+        child: Padding(
+          padding: const EdgeInsets.all(5.0),
+          child: TextFormField(
+            validator: (value) {
+              if (value?.isEmpty ?? false) {
+                return "출판사를 입력하세요";
+              }
+              return null;
+            },
+            onSaved: onSaved,
+          ),
         ),
       ),
     ],
@@ -189,7 +201,6 @@ class _CreateBookScreenState extends State<CreateBookScreen> {
     return SingleChildScrollView(
       child: AlertDialog(
         surfaceTintColor: Colors.white,
-        //shadowColor: Colors.white,
         shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
         title: const Text(
           "도서 추가하기",
@@ -242,10 +253,8 @@ class _CreateBookScreenState extends State<CreateBookScreen> {
                   // true : 제목 중복 검사 성공 = DB에 중복되는 제목이 없음
                   titleStatus = await titleCheck(title!);
                   setState(() {});
-                  print('titleStatus : $titleStatus');
                   return;
                 }
-                print('제목 유효성 검사 실패');
               },
             ),
           ],
@@ -253,7 +262,6 @@ class _CreateBookScreenState extends State<CreateBookScreen> {
         actions: [
           TextButton(
               onPressed: () {
-                print('뒤로가기');
                 Navigator.of(context).pop();
               },
               child: const Text("취소")),
@@ -286,7 +294,6 @@ class _CreateBookScreenState extends State<CreateBookScreen> {
                           image: image!,
                           publicher: publicher!));
                 }
-                print('전체 유효성 검사 실패');
               },
               child: const Text("추가")),
         ],
