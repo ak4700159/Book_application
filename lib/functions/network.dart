@@ -30,7 +30,7 @@ Future<void> postBook(Book book) async {
           "author": book.author,
           "publicher": book.publicher,
           "image": book.image,
-          "content": book.content
+          "content": book.content ?? ""
         });
     if (response.statusCode == 200) {
       print('네트워크 전송 성공');

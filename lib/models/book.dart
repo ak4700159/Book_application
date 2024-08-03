@@ -23,9 +23,10 @@ class Book {
         'author': String author,
         'publicher': String publicher,
         'title': String title,
+        'content': String content,
       } =>
         Book(
-          null,
+          content,
           image: image,
           author: author,
           publicher: publicher,

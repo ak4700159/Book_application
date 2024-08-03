@@ -2,7 +2,6 @@ import 'package:book/functions/network.dart';
 import 'package:book/models/book.dart';
 import 'package:book/screens/book_create_screen.dart';
 import 'package:book/screens/detail_screen.dart';
-import 'package:book/screens/modify_book_screen.dart';
 import 'package:flutter/material.dart';
 
 class ListScreen extends StatefulWidget {
@@ -97,12 +96,18 @@ class _ListScreenState extends State<ListScreen> {
 }
 
 Container getBookTile(Book book, BuildContext context, Function onDeleteBook) {
+  bool select = false;
   return Container(
     decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.black, width: 2))),
     child: Padding(
       padding: const EdgeInsets.all(8),
       child: ListTile(
+        selectedColor: Colors.red,
+        selected: select,
+        onLongPress: () {
+          select = true;
+        },
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => DetailScreen(book: book)));

@@ -252,6 +252,19 @@ class _CreateBookScreenState extends State<CreateBookScreen> {
                   titleFormKey.currentState?.save();
                   // true : 제목 중복 검사 성공 = DB에 중복되는 제목이 없음
                   titleStatus = await titleCheck(title!);
+                  if (!titleStatus) {
+                    Get.snackbar(
+                      "다시",
+                      "중복 검사를 하십시오......",
+                      colorText: Colors.black,
+                      backgroundColor: Colors.white,
+                      duration: const Duration(seconds: 2),
+                      snackPosition: SnackPosition.TOP,
+                      forwardAnimationCurve: Curves.elasticInOut,
+                      reverseAnimationCurve: Curves.easeOut,
+                    );
+                    return;
+                  }
                   setState(() {});
                   return;
                 }
