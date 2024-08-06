@@ -1,4 +1,4 @@
-import 'package:book/screens/list_screen.dart';
+import 'package:book/screens/list_screen/list_screen.dart';
 import 'package:book/screens/modify_book_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       initialRoute: '/list_screen',
-      //home: const ListScreen(),
     );
   }
 }

@@ -121,7 +121,7 @@ class _ModifyBookScreenState extends State<ModifyBookScreen> {
                     onPressed: () {
                       if ((_formKey.currentState?.validate() ?? false)) {
                         _formKey.currentState?.save();
-                        putBook(book);
+                        sendHttpMsg("PUT", book);
                         Navigator.pop(context);
                       }
                     },

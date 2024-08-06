@@ -2,6 +2,7 @@ import 'package:book/functions/network.dart';
 import 'package:book/models/book.dart';
 import 'package:book/screens/book_create_screen.dart';
 import 'package:book/screens/detail_screen.dart';
+import 'package:book/screens/list_screen/list_view.dart';
 import 'package:flutter/material.dart';
 
 class ListScreen extends StatefulWidget {
@@ -13,10 +14,18 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   late Future<List<Book>> books;
+  late List<bool> isSelected;
+
+  bool isGridMode = false;
+  bool selectAll = false;
+
   @override
   void initState() {
     super.initState();
     books = fetchBook();
+    books.then((books) {
+      isSelected = List.generate(books.length, (_) => false);
+    });
   }
 
   @override
@@ -75,17 +84,12 @@ class _ListScreenState extends State<ListScreen> {
         future: books,
         builder: (constext, snapshot) {
           if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (BuildContext context, int index) {
-                Book book = snapshot.data![index];
-                return getBookTile(book, context, (book) {
-                  setState(() {
-                    snapshot.data?.remove(book!);
-                  });
-                  deleteBook(book?.title);
-                });
-              },
+            //단순 MyListView MyGridView 클래스에 전달용
+            return MyListView(
+              books: snapshot.data!,
+              callback: () {},
+              isSelectd: isSelected,
+              selectedAll: selectAll,
             );
           }
           return const Center(child: CircularProgressIndicator());
@@ -93,10 +97,11 @@ class _ListScreenState extends State<ListScreen> {
       ),
     );
   }
+
+  void initializeSelection() {}
 }
 
 Container getBookTile(Book book, BuildContext context, Function onDeleteBook) {
-  bool select = false;
   return Container(
     decoration: const BoxDecoration(
         border: Border(bottom: BorderSide(color: Colors.black, width: 2))),
@@ -104,19 +109,21 @@ Container getBookTile(Book book, BuildContext context, Function onDeleteBook) {
       padding: const EdgeInsets.all(8),
       child: ListTile(
         selectedColor: Colors.red,
-        selected: select,
-        onLongPress: () {
-          select = true;
-        },
+        onLongPress: () {},
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => DetailScreen(book: book)));
         },
         title: Text(book.title),
         leading: Image.network(
+          width: 120,
+          height: 120,
           book.image,
           errorBuilder: (context, object, stack) {
             return Image.network(
+                alignment: Alignment.topLeft,
+                width: 120,
+                height: 120,
                 "https://d0.awsstatic.com/Digital%20Marketing/sitemerch/sign-in/KO/Site-Merch_PAC_GuardDuty_Sign-in_KO.png");
           },
         ),

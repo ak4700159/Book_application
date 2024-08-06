@@ -32,7 +32,7 @@ void showCheckDialog(BuildContext context, Book book) {
                 child: const Text('취소')),
             TextButton(
                 onPressed: () {
-                  postBook(book);
+                  sendHttpMsg("POST", book);
                   Navigator.popUntil(
                       context, ModalRoute.withName('/list_screen'));
                 },
