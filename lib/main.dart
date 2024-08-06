@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
         '/list_screen': (context) => const ListScreen(),
         ModifyBookScreen.routeName: (context) => const ModifyBookScreen(),
       },
-      title: 'Book List App',
+      title: 'Book List App 0.0.5-1',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
