@@ -8,7 +8,7 @@
 .buildlog/
 .history
 .svn/
-./screens/test_screen.dart
+# ./screens/test_screen.dart
 migrate_working_dir/
 
 # IntelliJ related
