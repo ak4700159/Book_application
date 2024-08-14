@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
-  runApp(TestScreen());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -16,6 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       routes: {
+        //'login_screen' : (context) => const LoginScreen(),
+        '/test_screen': (context) => const TestScreen(),
         '/list_screen': (context) => const ListScreen(),
         ModifyBookScreen.routeName: (context) => const ModifyBookScreen(),
       },
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/list_screen',
+      initialRoute: '/test_screen',
     );
   }
 }

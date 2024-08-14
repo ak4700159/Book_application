@@ -1,20 +1,18 @@
-import 'package:http/http.dart' as http;
-
-import 'dart:async';
-import 'dart:convert';
-
 class Book {
-  Book(this.content,
-      {required this.title,
-      required this.author,
-      required this.image,
-      required this.publicher});
+  Book(
+    this.content, {
+    required this.title,
+    required this.author,
+    required this.image,
+    required this.publicher,
+  });
 
   String title;
   String author;
   String image;
   String publicher;
   String? content;
+  bool? isChecked = false;
 
   factory Book.fromJson(Map<String, dynamic> json) {
     return switch (json) {
@@ -34,19 +32,5 @@ class Book {
         ),
       _ => throw const FormatException('Failed to load album.'),
     };
-  }
-}
-
-Future<List<Book>> fetchBook() async {
-  final response = await http.get(Uri.parse(
-      'https://6fh6doylz4.execute-api.ap-northeast-2.amazonaws.com/default/Book_dyamondDBFunc'));
-
-  if (response.statusCode == 200) {
-    print('요청 응답 성공');
-    List<dynamic> result = jsonDecode(response.body);
-    var newResult = result.map((book) => Book.fromJson(book)).toList();
-    return newResult;
-  } else {
-    throw Exception('Failed to load book');
   }
 }

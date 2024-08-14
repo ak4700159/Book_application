@@ -13,19 +13,12 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-  late Future<List<Book>> books;
-  late List<bool> isSelected;
-
-  bool isGridMode = false;
-  bool selectAll = false;
+  bool isGridView = false;
+  bool isAllSelected = false;
 
   @override
   void initState() {
     super.initState();
-    books = fetchBook();
-    books.then((books) {
-      isSelected = List.generate(books.length, (_) => false);
-    });
   }
 
   @override
@@ -48,9 +41,7 @@ class _ListScreenState extends State<ListScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                setState(() {
-                  books = fetchBook();
-                });
+                setState(() {});
               },
               icon: const Icon(Icons.refresh)),
           PopupMenuButton(itemBuilder: (BuildContext context) {
@@ -80,74 +71,8 @@ class _ListScreenState extends State<ListScreen> {
           }),
         ],
       ),
-      body: FutureBuilder(
-        future: books,
-        builder: (constext, snapshot) {
-          if (snapshot.hasData) {
-            //단순 MyListView MyGridView 클래스에 전달용
-            return MyListView(
-              books: snapshot.data!,
-              callback: () {},
-              isSelectd: isSelected,
-              selectedAll: selectAll,
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
-      ),
+      // body 작성하기
+      body: MyListView(),
     );
   }
-
-  void initializeSelection() {}
-}
-
-Container getBookTile(Book book, BuildContext context, Function onDeleteBook) {
-  return Container(
-    decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.black, width: 2))),
-    child: Padding(
-      padding: const EdgeInsets.all(8),
-      child: ListTile(
-        selectedColor: Colors.red,
-        onLongPress: () {},
-        onTap: () {
-          Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => DetailScreen(book: book)));
-        },
-        title: Text(book.title),
-        leading: Image.network(
-          width: 120,
-          height: 120,
-          book.image,
-          errorBuilder: (context, object, stack) {
-            return Image.network(
-                alignment: Alignment.topLeft,
-                width: 120,
-                height: 120,
-                "https://d0.awsstatic.com/Digital%20Marketing/sitemerch/sign-in/KO/Site-Merch_PAC_GuardDuty_Sign-in_KO.png");
-          },
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(
-                    context,
-                    '/modify_screen',
-                    arguments: book,
-                  );
-                },
-                icon: const Icon(Icons.bookmark_add)),
-            IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () {
-                onDeleteBook(book);
-              },
-            ),
-          ],
-        ),
-      ),
-    ),
-  );
 }

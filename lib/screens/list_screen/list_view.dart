@@ -1,53 +1,33 @@
 import 'package:book/functions/network.dart';
+import 'package:book/models/GetXBooks.dart';
+import 'package:get/get.dart';
 import 'package:book/models/book.dart';
 import 'package:book/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
 
 // ------------  리스트뷰 ---------------
-class MyListView extends StatefulWidget {
-  MyListView(
-      {super.key,
-      required this.callback,
-      required this.isSelectd,
-      required this.selectedAll,
-      required this.books});
-  List<bool> isSelectd;
-  bool selectedAll;
-  Function callback;
-  List<Book> books;
-
-  @override
-  State<MyListView> createState() => _MyListViewState();
-}
-
-class _MyListViewState extends State<MyListView> {
-  late List<bool> isSelectd;
-  late List<Book> books;
-  late bool selectedAll;
-  late Function callback;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    isSelectd = widget.isSelectd;
-    selectedAll = widget.selectedAll;
-    callback = widget.callback;
-    books = widget.books;
-  }
+class MyListView extends StatelessWidget {
+  const MyListView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: books.length,
-      itemBuilder: (BuildContext context, int index) {
-        Book book = books[index];
-        return getBookTile(book, context, (book) {
-          setState(() {
-            books.remove(book!);
-          });
-          sendHttpMsg("DELETE", book);
-        });
+    return GetX<Books>(
+      builder: (controller) {
+        return Center(
+          // ignore: invalid_use_of_protected_member
+          child: ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return getBookTile(
+                controller.books.value[index],
+                context,
+                (book) {
+                  controller.deleteBook(book.title);
+                },
+              );
+            },
+            itemCount: controller.books.value.length,
+          ),
+        );
       },
     );
   }
