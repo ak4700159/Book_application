@@ -72,7 +72,7 @@ class _ListScreenState extends State<ListScreen> {
         ],
       ),
       // body 작성하기
-      body: MyListView(),
+      body: const MyListView(),
     );
   }
 }

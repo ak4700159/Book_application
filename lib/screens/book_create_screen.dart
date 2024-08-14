@@ -1,4 +1,5 @@
 import 'package:book/functions/network.dart';
+import 'package:book/models/GetXBooks.dart';
 import 'package:book/models/book.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,28 +17,36 @@ void showCheckDialog(BuildContext context, Book book) {
   showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
-          title: const Text(
-            '추가하기',
-            style: TextStyle(
-                color: Colors.red, fontSize: 15, fontWeight: FontWeight.bold),
-          ),
-          content: const Text('추가하시겠습니까?'),
-          actions: [
-            TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: const Text('취소')),
-            TextButton(
-                onPressed: () {
-                  sendHttpMsg("POST", book);
-                  Navigator.popUntil(
-                      context, ModalRoute.withName('/list_screen'));
-                },
-                child: const Text('추가 확정'))
-          ],
+        return GetX<Books>(
+          builder: (controller) {
+            return AlertDialog(
+              shape:
+                  const BeveledRectangleBorder(borderRadius: BorderRadius.zero),
+              title: const Text(
+                '추가하기',
+                style: TextStyle(
+                    color: Colors.red,
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold),
+              ),
+              content: const Text('추가하시겠습니까?'),
+              actions: [
+                TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text('취소')),
+                TextButton(
+                    onPressed: () {
+                      sendHttpMsg("POST", book);
+                      controller.insertBook(book);
+                      Navigator.popUntil(
+                          context, ModalRoute.withName('/list_screen'));
+                    },
+                    child: const Text('추가 확정'))
+              ],
+            );
+          },
         );
       });
 }

@@ -12,6 +12,7 @@ class MyListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetX<Books>(
+      //init: Books(),
       builder: (controller) {
         return Center(
           // ignore: invalid_use_of_protected_member
@@ -51,8 +52,6 @@ Container getBookTile(Book book, BuildContext context, Function onDeleteBook) {
           book.image,
           errorBuilder: (context, object, stack) {
             return Image.network(
-                width: 10,
-                height: 10,
                 "https://d0.awsstatic.com/Digital%20Marketing/sitemerch/sign-in/KO/Site-Merch_PAC_GuardDuty_Sign-in_KO.png");
           },
         ),
