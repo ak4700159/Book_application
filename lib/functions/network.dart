@@ -9,7 +9,7 @@ Future<bool> titleCheck(String title) async {
         queryParameters: {"title": title});
 
     // "success" 쌍따옴표 전체가 문자열 형태로 반환된다.
-    // "success"의 의미는 DB에 중복된 제목이 없음을 의미한다.
+    // "success"의 의미는 dynamoDB에 중복된 제목이 없음을 의미한다.
     print('data : ${response.data}');
     if (response.data == '"success"') {
       return true;
@@ -23,7 +23,7 @@ Future<bool> titleCheck(String title) async {
 
 Future<void> sendHttpMsg(String method, Book book) async {
   var response;
-  var result;
+  //var result;
   try {
     switch (method) {
       case "PUT":

@@ -5,6 +5,8 @@ import 'package:book/screens/detail_screen.dart';
 import 'package:book/screens/list_screen/list_view.dart';
 import 'package:flutter/material.dart';
 
+// list_screen -> body : isGridView ? MyGirdView : MyListView
+// 위 위젯의 상위에서 상태를 동록한다. ( List<Book> : Provider 등록 )
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
 

@@ -1,16 +1,7 @@
-# book
+# Book application PROJECT
+**도서 관리 어플리케이션**
+내가 원하는 도서를 추가하고 삭제하고 수정하는 기능을 갖춘 도서 관리 어플리케이션
+서비스 배포의 목적은 아니며 Flutter 상태 관리 기법을 공부하며 적용해보는 소형 프로젝트.
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## GetX ?? Provider ?? 
+- ### GetX

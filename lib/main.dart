@@ -1,31 +1,30 @@
-import 'package:book/models/GetXBooks.dart';
 import 'package:book/screens/list_screen/list_screen.dart';
 import 'package:book/screens/modify_book_screen.dart';
-import 'package:book/test_ground/test_screen.dart';
+import 'package:book/test_ground/test_func.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const BookApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class BookApp extends StatelessWidget {
+  const BookApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Get.put(Books());
     return GetMaterialApp(
       routes: {
         //'login_screen' : (context) => const LoginScreen(),
-        '/test_screen': (testContext) => TestScreen(),
+        //'/test_screen': (testContext) => TestScreen(),
         '/list_screen': (listContext) => const ListScreen(),
         ModifyBookScreen.routeName: (context) => const ModifyBookScreen(),
       },
-      title: 'Book List App 0.0.5-1',
+      title: '도서 목록 관리 어플리케이션',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        textTheme: TextTheme(
+            titleLarge: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
