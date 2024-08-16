@@ -12,6 +12,8 @@ class SplashViewModel {
   Future<bool> checkLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     _isLogin = prefs.getBool('isLogin') ?? false;
+    // 스플래시 화면 잘뜨는지 확인하기 위해 일부러 시간을 지연
+    await Future.delayed(Duration(seconds: 2), () {});
     return _isLogin;
   }
 

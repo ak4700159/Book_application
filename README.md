@@ -4,9 +4,5 @@
 서비스 배포의 목적은 아니며 Flutter 상태 관리 기법을 공부하며 적용해보는 소형 프로젝트.
 
 ## GetX ?? Provider ?? 
-- ### GetX
-
-
-자료 정리가 잘되어 있는 사이트
-- https://engineering.linecorp.com/ko/blog/demaecan-2nd-recode-kmm-to-flutter
-- 
+- 승자는 프로바이더!!!!
+- 프로젝트 진행이 완료되면 Riverpod 패턴을 적용해보자 (현재는 MVVM 패턴을 활용 중)

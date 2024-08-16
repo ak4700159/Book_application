@@ -13,7 +13,7 @@ class BookApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       routes: {
         '/': (context) => SplashView(),
         '/login': (context) => LoginView(),
@@ -22,11 +22,21 @@ class BookApp extends StatelessWidget {
       title: '도서 목록 관리 어플리케이션',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        colorScheme: ColorScheme(
+            brightness: Brightness.dark,
+            primary: const Color.fromARGB(255, 204, 194, 194),
+            onPrimary: Colors.black,
+            secondary: Colors.red,
+            onSecondary: Colors.white,
+            error: Colors.red,
+            onError: Colors.red,
+            surface: Colors.white,
+            onSurface: Colors.white),
         textTheme: TextTheme(
             titleLarge: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
+      color: Colors.red,
       initialRoute: '/',
     );
   }
