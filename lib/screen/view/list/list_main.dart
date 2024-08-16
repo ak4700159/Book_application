@@ -1,20 +1,17 @@
-import 'package:book/functions/network.dart';
-import 'package:book/models/book.dart';
-import 'package:book/screens/book_create_screen.dart';
-import 'package:book/screens/detail_screen.dart';
-import 'package:book/screens/list_screen/list_view.dart';
+import 'package:book/screen/view/list/book_create_view.dart';
+import 'package:book/screen/view/list/list_view.dart';
 import 'package:flutter/material.dart';
 
 // list_screen -> body : isGridView ? MyGirdView : MyListView
 // 위 위젯의 상위에서 상태를 동록한다. ( List<Book> : Provider 등록 )
-class ListScreen extends StatefulWidget {
-  const ListScreen({super.key});
+class ListMainView extends StatefulWidget {
+  const ListMainView({super.key});
 
   @override
-  State<ListScreen> createState() => _ListScreenState();
+  State<ListMainView> createState() => _ListMainViewState();
 }
 
-class _ListScreenState extends State<ListScreen> {
+class _ListMainViewState extends State<ListMainView> {
   bool isGridView = false;
   bool isAllSelected = false;
 
@@ -50,7 +47,7 @@ class _ListScreenState extends State<ListScreen> {
             return [
               PopupMenuItem(
                 onTap: () {
-                  showCreateBookDialog(context);
+                  //showCreateBookDialog(context);
                 },
                 child: const Text(
                   '도서 추가하기',

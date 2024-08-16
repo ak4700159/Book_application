@@ -1,6 +1,6 @@
-import 'package:book/functions/network.dart';
+import 'package:book/model(service)/network.dart';
 import 'package:book/models/GetXBooks.dart';
-import 'package:book/models/book.dart';
+import 'package:book/model(service)/book.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
