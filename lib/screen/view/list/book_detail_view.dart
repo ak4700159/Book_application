@@ -1,6 +1,6 @@
-import 'package:book/models/book.dart';
 import 'package:flutter/material.dart';
 
+/*
 // ignore: must_be_immutable
 class DetailScreen extends StatelessWidget {
   DetailScreen({super.key, required this.book});
@@ -75,3 +75,4 @@ class DetailScreen extends StatelessWidget {
     );
   }
 }
+*/

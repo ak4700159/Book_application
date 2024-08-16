@@ -1,4 +1,4 @@
-import 'package:book/models/book.dart';
+import 'package:book/model(service)/book.dart';
 import 'package:dio/dio.dart';
 
 Future<bool> titleCheck(String title) async {

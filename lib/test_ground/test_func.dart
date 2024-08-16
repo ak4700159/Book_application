@@ -1,5 +1,5 @@
-import 'package:book/functions/network.dart';
-import 'package:book/models/book.dart';
+import 'package:book/model(service)/network.dart';
+import 'package:book/model(service)/book.dart';
 import 'dart:async';
 
 // 임의로 데이터 100ro tkrdl

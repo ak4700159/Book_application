@@ -1,6 +1,6 @@
-import 'package:book/screens/list_screen/list_screen.dart';
-import 'package:book/screens/modify_book_screen.dart';
-import 'package:book/test_ground/test_func.dart';
+import 'package:book/screen/view/list/list_main.dart';
+import 'package:book/screen/view/login/login_view.dart';
+import 'package:book/screen/view/splash_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,22 +13,31 @@ class BookApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
+    return MaterialApp(
       routes: {
-        //'login_screen' : (context) => const LoginScreen(),
-        //'/test_screen': (testContext) => TestScreen(),
-        '/list_screen': (listContext) => const ListScreen(),
-        ModifyBookScreen.routeName: (context) => const ModifyBookScreen(),
+        '/': (context) => SplashView(),
+        '/login': (context) => LoginView(),
+        '/list': (context) => ListMainView(),
       },
       title: '도서 목록 관리 어플리케이션',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        colorScheme: ColorScheme(
+            brightness: Brightness.dark,
+            primary: const Color.fromARGB(255, 204, 194, 194),
+            onPrimary: Colors.black,
+            secondary: Colors.red,
+            onSecondary: Colors.white,
+            error: Colors.red,
+            onError: Colors.red,
+            surface: Colors.white,
+            onSurface: Colors.white),
         textTheme: TextTheme(
             titleLarge: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/list_screen',
+      color: Colors.red,
+      initialRoute: '/',
     );
   }
 }

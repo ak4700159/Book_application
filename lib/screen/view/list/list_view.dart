@@ -1,14 +1,20 @@
-import 'package:book/functions/network.dart';
-import 'package:book/models/GetXBooks.dart';
-import 'package:get/get.dart';
-import 'package:book/models/book.dart';
-import 'package:book/screens/detail_screen.dart';
 import 'package:flutter/material.dart';
 
 // ------------  리스트뷰 ---------------
 class MyListView extends StatelessWidget {
   const MyListView({super.key});
 
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Center(
+      child: Text('텅텅'),
+    );
+  }
+}
+
+
+/*
   @override
   Widget build(BuildContext context) {
     return GetX<Books>(
@@ -33,6 +39,7 @@ class MyListView extends StatelessWidget {
     );
   }
 }
+
 
 Container getBookTile(Book book, BuildContext context, Function onDeleteBook) {
   return Container(
@@ -79,3 +86,4 @@ Container getBookTile(Book book, BuildContext context, Function onDeleteBook) {
     ),
   );
 }
+*/
