@@ -1,4 +1,5 @@
 import 'package:book/screen/view/list/book_create_view.dart';
+import 'package:book/screen/view/list/grid_view.dart';
 import 'package:book/screen/view/list/list_view.dart';
 import 'package:flutter/material.dart';
 
@@ -24,8 +25,9 @@ class _ListMainViewState extends State<ListMainView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 80,
         title: const Text(
-          '도서목록 앱',
+          '리스트',
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
@@ -38,11 +40,19 @@ class _ListMainViewState extends State<ListMainView> {
           ),
         ),
         actions: [
-          IconButton(
-              onPressed: () {
-                setState(() {});
-              },
-              icon: const Icon(Icons.refresh)),
+          Column(
+            children: [
+              Switch(
+                value: isGridView,
+                onChanged: (bool value) {
+                  setState(() {
+                    isGridView = value;
+                  });
+                },
+              ),
+              const Text('그리드뷰 활성화'),
+            ],
+          ),
           PopupMenuButton(itemBuilder: (BuildContext context) {
             return [
               PopupMenuItem(
@@ -71,7 +81,7 @@ class _ListMainViewState extends State<ListMainView> {
         ],
       ),
       // body 작성하기
-      body: const MyListView(),
+      body: isGridView ? MyGridView() : MyListView(),
     );
   }
 }

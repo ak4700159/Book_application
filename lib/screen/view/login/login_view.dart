@@ -1,16 +1,17 @@
 import 'package:book/screen/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginView extends StatelessWidget {
   LoginView({super.key});
-  LoginViewModel loginViewModel = LoginViewModel(id: "id", passwd: "passwd");
 
   @override
   Widget build(BuildContext context) {
+    var loginViewModel = Provider.of<LoginViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '로그인 화면',
+          '로그인 화면 [id : ${loginViewModel.id}, pwd : ${loginViewModel.passwd}]',
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
@@ -18,11 +19,18 @@ class LoginView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.book),
+              Icon(
+                Icons.book,
+                color: Colors.blueAccent,
+              ),
               Text(
                 '나만의 도서관리 어플리케이션',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.amber),
               ),
             ],
           ),
