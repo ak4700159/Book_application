@@ -36,21 +36,42 @@ class MyGridView extends StatelessWidget {
                 crossAxisCount: 2),
             itemBuilder: (context, index) {
               return GridTile(
-                  header: Text(bookController.books[index].title),
                   child: getBookGirdTile(
-                      bookController.books[index], context, () {}));
+                      bookController.books[index], context, () {}, index));
             });
   }
 }
 
-Widget getBookGirdTile(Book book, BuildContext context, Function onDeleteBook) {
-  return Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Container(
-      decoration: const BoxDecoration(
-          border: Border(bottom: BorderSide(color: Colors.black, width: 2))),
-      child: GridTile(
-        child: Image.network(book.image),
+Widget getBookGirdTile(
+    Book book, BuildContext context, Function onDeleteBook, int index) {
+  return Container(
+    margin: const EdgeInsets.all(10.0),
+    padding: const EdgeInsets.all(15.0),
+    decoration: BoxDecoration(
+        border: Border.all(color: Colors.black, width: 2),
+        color: ((index % 4 == 1) || (index % 4 == 2))
+            ? Colors.grey
+            : Colors.white),
+    child: GridTile(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Text(
+              book.title,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+          ),
+          Image.network(
+            book.image,
+            errorBuilder: (context, object, stack) {
+              return const Icon(
+                Icons.library_books,
+                size: 60,
+              );
+            },
+          ),
+        ],
       ),
     ),
   );

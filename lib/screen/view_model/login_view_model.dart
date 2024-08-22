@@ -8,7 +8,7 @@ class LoginViewModel {
   // 회원가입 또는 비밀번호 아이디 찾을 때 필요한 정보.
   String? email;
   String? name;
-  String? phone_number;
+  String? phoneNumber;
 
   GlobalKey<FormState> idFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> pwdFormKey = GlobalKey<FormState>();

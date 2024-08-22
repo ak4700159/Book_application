@@ -1,31 +1,37 @@
+import 'dart:convert';
+import 'package:book/screen/view_model/list_view_model.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:book/model(service)/book.dart';
 import 'package:book/model(service)/network.dart';
 import 'package:flutter/material.dart';
 
+// BookController 클래스는 Book 데이터들을 리스트 형태로 관리하는 모델이다.
 class BookController with ChangeNotifier {
-  // 생성자에서 Books 리스트르 초기화
-  // 초기엔 비어있을 수 있다. 이를 조심해야 됨.
-  final MyNetwok netwok = const MyNetwok();
+  final MyNetwork network = MyNetwork();
+  // 초기엔 빈리스트를 가지고 있다.
+  // 이 어플에선 books에 데이터를 무조건 들어와 있다고 가정함.
+  List<Book> books = [];
+
+  // 생성자에서 Books 리스트르 초기화 + 리스트뷰에서 사용될 상태 초기화
   BookController() {
     initBooks();
   }
 
-  List<Book> books = [];
-
   initBooks() async {
-    await netwok.fetchBook(books);
-    await Future.delayed(const Duration(seconds: 2), () {});
+    await network.fetchBook(books);
+    //await Future.delayed(const Duration(seconds: 5), () {});
+    print('컨트롤러 초기화');
     notifyListeners();
-    print(books);
   }
 
   void updateBook() async {
-    await netwok.fetchBook(books);
+    await network.fetchBook(books);
     notifyListeners();
   }
 
   void deleteBook(String title) async {
-    bool result = await netwok.sendHttpMsg(
+    bool result = await network.sendHttpMsg(
         'DELETE',
         Book(
           "",
@@ -60,23 +66,6 @@ class BookController with ChangeNotifier {
         books[i] = book;
       }
     }
-    notifyListeners();
-  }
-
-  void toggleSelected(int index) {
-    books[index].isChecked = !(books[index].isChecked ?? false);
-    notifyListeners();
-  }
-
-  void checkAll() {
-    books.forEach((book) {
-      book.isChecked = true;
-    });
-    notifyListeners();
-  }
-
-  void deleteCheckedBook() {
-    books.removeWhere((book) => book.isChecked == true);
     notifyListeners();
   }
 }

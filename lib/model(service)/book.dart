@@ -12,7 +12,7 @@ class Book {
   String image;
   String publicher;
   String? content;
-  bool? isChecked = false;
+  //bool? isChecked = false;
 
   factory Book.fromJson(Map<String, dynamic> json) {
     return switch (json) {
@@ -30,7 +30,7 @@ class Book {
           publicher: publicher,
           title: title,
         ),
-      _ => throw const FormatException('Failed to load album.'),
+      _ => throw const FormatException('Failed to load book.'),
     };
   }
 }

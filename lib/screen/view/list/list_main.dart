@@ -1,7 +1,9 @@
-import 'package:book/screen/view/list/book_create_view.dart';
+import 'package:book/model(service)/book_controller.dart';
 import 'package:book/screen/view/list/grid_view.dart';
 import 'package:book/screen/view/list/list_view.dart';
+import 'package:book/screen/view_model/list_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // list_screen -> body : isGridView ? MyGirdView : MyListView
 // 위 위젯의 상위에서 상태를 동록한다. ( List<Book> : Provider 등록 )
@@ -13,9 +15,6 @@ class ListMainView extends StatefulWidget {
 }
 
 class _ListMainViewState extends State<ListMainView> {
-  bool isGridView = false;
-  bool isAllSelected = false;
-
   @override
   void initState() {
     super.initState();
@@ -23,6 +22,8 @@ class _ListMainViewState extends State<ListMainView> {
 
   @override
   Widget build(BuildContext context) {
+    //var bookController = Provider.of<BookController>(context);
+    var listViewModel = Provider.of<ListViewModel>(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
@@ -43,10 +44,10 @@ class _ListMainViewState extends State<ListMainView> {
           Column(
             children: [
               Switch(
-                value: isGridView,
+                value: listViewModel.isGridViewMode,
                 onChanged: (bool value) {
                   setState(() {
-                    isGridView = value;
+                    listViewModel.isGridViewMode = value;
                   });
                 },
               ),
@@ -81,7 +82,9 @@ class _ListMainViewState extends State<ListMainView> {
         ],
       ),
       // body 작성하기
-      body: isGridView ? MyGridView() : MyListView(),
+      body: listViewModel.isGridViewMode
+          ? const MyGridView()
+          : const MyListView(),
     );
   }
 }

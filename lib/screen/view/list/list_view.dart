@@ -1,5 +1,6 @@
 import 'package:book/model(service)/book.dart';
 import 'package:book/model(service)/book_controller.dart';
+import 'package:book/screen/view_model/list_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +11,8 @@ class MyListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bookController = Provider.of<BookController>(context);
+    var listViewModel = Provider.of<ListViewModel>(context);
+
     // TODO: implement build
     return bookController.books.isEmpty
         ? const Center(
@@ -33,45 +36,85 @@ class MyListView extends StatelessWidget {
               ],
             ),
           )
-        : ListView.builder(itemBuilder: (BuildContext context, int index) {
-            return getBookListTile(bookController.books[index], context,
-                bookController.deleteBook);
-          });
+        : ListView.builder(
+            itemBuilder: (BuildContext context, int index) {
+              return MyListTile(
+                  book: bookController.books[index],
+                  onDeleteBook: bookController.deleteBook,
+                  index: index);
+            },
+            itemCount: bookController.books.length,
+          );
   }
 }
 
-Container getBookListTile(
-    Book book, BuildContext context, Function onDeleteBook) {
-  return Container(
-    decoration: const BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.black, width: 2))),
-    child: Padding(
-      padding: const EdgeInsets.all(8),
-      child: ListTile(
-        selectedColor: Colors.red,
-        onLongPress: () {},
-        onTap: () {},
-        title: Text(book.title),
-        leading: Image.network(
-          book.image,
-          errorBuilder: (context, object, stack) {
-            return Image.network(
-                "https://d0.awsstatic.com/Digital%20Marketing/sitemerch/sign-in/KO/Site-Merch_PAC_GuardDuty_Sign-in_KO.png");
+class MyListTile extends StatelessWidget {
+  MyListTile(
+      {super.key,
+      required this.book,
+      required this.index,
+      required this.onDeleteBook});
+  Function onDeleteBook;
+  int index;
+  Book book;
+
+  @override
+  Widget build(BuildContext context) {
+    var listViewModel = Provider.of<ListViewModel>(context);
+
+    return Container(
+      decoration: const BoxDecoration(
+          border: Border(bottom: BorderSide(color: Colors.black, width: 2))),
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: ListTile(
+          selectedColor: Colors.red,
+          onLongPress: () {
+            listViewModel.toggleSelected(index);
+            print('제스처 감지 : ${listViewModel.isSeletedMode}');
           },
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.bookmark_add)),
-            IconButton(
-              icon: const Icon(Icons.delete),
-              onPressed: () {
-                onDeleteBook(book.title);
-              },
-            ),
-          ],
+          onTap: () {
+            Navigator.pushNamed(context, '/list/detail',
+                arguments: {"book": book});
+          },
+          title: Text(book.title),
+          leading: Image.network(
+            book.image,
+            errorBuilder: (context, object, stack) {
+              return const Icon(Icons.library_books);
+            },
+          ),
+          trailing: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: listViewModel.isSeletedMode
+                ? [
+                    IconButton(
+                        onPressed: () {}, icon: const Icon(Icons.bookmark_add)),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        onDeleteBook(book.title);
+                      },
+                    ),
+                    Checkbox(
+                        value: listViewModel.selectedList[index],
+                        onChanged: (value) {
+                          listViewModel.selectedList[index] = value ?? false;
+                        }),
+                  ]
+                : [
+                    IconButton(
+                        onPressed: () {}, icon: const Icon(Icons.bookmark_add)),
+                    IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () {
+                        onDeleteBook(book.title);
+                      },
+                    ),
+                  ],
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }

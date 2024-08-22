@@ -1,13 +1,21 @@
+import 'package:book/model(service)/book.dart';
 import 'package:flutter/material.dart';
 
-/*
-// ignore: must_be_immutable
-class DetailScreen extends StatelessWidget {
-  DetailScreen({super.key, required this.book});
-  Book book;
+class DetailBookView extends StatelessWidget {
+  DetailBookView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // ModalRoute 객체를 통해서 디테일 페이지로 변환될 때 전달된
+    // 인자를 받을 수 있게 된다.
+    Map<String, Book> data =
+        ModalRoute.of(context)?.settings.arguments as Map<String, Book>;
+    Book book = data["book"] ??
+        Book("content",
+            title: "title",
+            author: "author",
+            image: "image",
+            publicher: "publicher");
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -21,8 +29,12 @@ class DetailScreen extends StatelessWidget {
           Image.network(
             book.image,
             errorBuilder: (context, object, stack) {
-              return Image.network(
-                  "https://d0.awsstatic.com/Digital%20Marketing/sitemerch/sign-in/KO/Site-Merch_PAC_GuardDuty_Sign-in_KO.png");
+              return const Center(
+                child: Icon(
+                  Icons.library_books,
+                  size: 100,
+                ),
+              );
             },
           ),
           Container(
@@ -66,7 +78,7 @@ class DetailScreen extends StatelessWidget {
                 text: TextSpan(
                     style: const TextStyle(color: Colors.black),
                     text:
-                        "내용 : ${book.content ?? "비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다비어있습니다"}"),
+                        "내용 : ${book.content!.isEmpty ? "빈문자열" : book.content ?? "null 값이 활성화되어 있는 상황"}"),
               ),
             ),
           ),
@@ -75,4 +87,3 @@ class DetailScreen extends StatelessWidget {
     );
   }
 }
-*/
