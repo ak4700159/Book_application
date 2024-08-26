@@ -14,7 +14,7 @@ void main() {
 }
 
 // 휴대폰 사이즈에 맞게 UI 크기와 폰트사이즈 조절
-// 서브 목적.
+// 추가로 사용자 정의 테마 클래스 만들기 -> 일관된 테마 유지 + 유지 보수에 용이
 class RootWidget extends StatelessWidget {
   const RootWidget({super.key});
 
