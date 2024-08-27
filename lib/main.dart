@@ -5,9 +5,11 @@ import 'package:book/screen/view/login/login_view.dart';
 import 'package:book/screen/view/splash_view.dart';
 import 'package:book/screen/view_model/list_view_model.dart';
 import 'package:book/screen/view_model/login_view_model.dart';
+import 'package:book/test_ground/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:riverpod/riverpod.dart';
 
 void main() {
   runApp(const BookApp());
@@ -39,6 +41,7 @@ class BookApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider<Counter>.value(value: Counter()),
         Provider<LoginViewModel>.value(
             value: LoginViewModel(id: "5645164", passwd: "1234")),
         ChangeNotifierProvider<BookController>.value(value: BookController()),

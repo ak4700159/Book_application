@@ -2,6 +2,7 @@ import 'package:book/model(service)/book_controller.dart';
 import 'package:book/screen/view/list/grid_view.dart';
 import 'package:book/screen/view/list/list_view.dart';
 import 'package:book/screen/view_model/list_view_model.dart';
+import 'package:book/test_ground/test_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +25,14 @@ class _ListMainViewState extends State<ListMainView> {
   Widget build(BuildContext context) {
     //var bookController = Provider.of<BookController>(context);
     var listViewModel = Provider.of<ListViewModel>(context);
+    print('메인 리스트뷰 위젯 재실행');
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
-        title: const Text(
-          '리스트',
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        title: Text(
+          '리스트   ${context.watch<Counter>().num}',
+          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           onPressed: () {
@@ -77,14 +80,52 @@ class _ListMainViewState extends State<ListMainView> {
                     '도서 수정하기',
                     style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                   )),
+              PopupMenuItem(
+                  onTap: () {
+                    context.read<Counter>().increment();
+                    print('버튼 on ${context.read<Counter>().num}');
+                  },
+                  child: const Text(
+                    '테스트 버튼',
+                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  )),
             ];
           }),
         ],
       ),
       // body 작성하기
-      body: listViewModel.isGridViewMode
-          ? const MyGridView()
-          : const MyListView(),
+      body: Column(
+        children: [
+          Text(
+            '리스트 세션 1',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          Container(
+            margin: EdgeInsets.all(8),
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: listViewModel.isGridViewMode
+                ? const MyGridView()
+                : const MyListView(),
+          ),
+          Text(
+            '리스트 세션 2',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+          Container(
+            margin: EdgeInsets.all(8),
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(border: Border.all(width: 1)),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.3,
+            child: !listViewModel.isGridViewMode
+                ? const MyGridView()
+                : const MyListView(),
+          ),
+        ],
+      ),
     );
   }
 }

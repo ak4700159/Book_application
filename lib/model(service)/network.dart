@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:book/model(service)/book.dart';
 import 'package:dio/dio.dart';
 
+// URL = 식별자를 제외한 URI 주소
+// URI = 식별자까지 포함한 주소
+// 식별자 = query + fragment
 class MyNetwork {
   MyNetwork();
   static const String dynamoDBuri =
@@ -14,7 +17,7 @@ class MyNetwork {
 // 이유가 무엇인지 감도 안잡힌다. 이유는 changeNotifier로 등록된
 // 위젯에서 지속적으로 빌드함수를 재샐행하기에 발생한 것.
   Future<void> fetchBook(List<Book> books) async {
-    final response = await http.get(Uri.parse(MyNetwork.dynamoDBuri));
+    final response = await http.get(Uri.parse(dynamoDBuri));
 
     if (response.statusCode == 200) {
       print('요청 응답 성공');
@@ -97,7 +100,7 @@ class MyNetwork {
       } else {
         throw Exception("네트워크 전송 실패");
       }
-    } on DioException catch (e) {
+    } on (DioException, Exception) catch (e) {
       print('dio : $e');
       return false;
     }

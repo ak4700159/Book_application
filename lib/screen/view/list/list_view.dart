@@ -68,6 +68,7 @@ class MyListTile extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: ListTile(
+          minTileHeight: 150,
           selectedColor: Colors.red,
           onLongPress: () {
             listViewModel.toggleSelected(index);
@@ -81,7 +82,10 @@ class MyListTile extends StatelessWidget {
           leading: Image.network(
             book.image,
             errorBuilder: (context, object, stack) {
-              return const Icon(Icons.library_books);
+              return Icon(
+                Icons.library_books,
+                size: 80,
+              );
             },
           ),
           trailing: Row(
