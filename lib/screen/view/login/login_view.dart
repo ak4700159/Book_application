@@ -18,7 +18,7 @@ class LoginView extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
@@ -35,6 +35,14 @@ class LoginView extends StatelessWidget {
             ],
           ),
           // 폼필드 작성
+
+          // 바로 가기 버튼
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/list', (route) => false);
+              },
+              child: Text('넘어가기'))
         ],
       ),
     );
