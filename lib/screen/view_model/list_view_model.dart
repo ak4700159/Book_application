@@ -27,6 +27,11 @@ class ListViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  toggleSelectedMode() {
+    isGridViewMode = !isGridViewMode;
+    notifyListeners();
+  }
+
   void toggleSelected(int index) {
     selectedList[index] = !(selectedList[index]);
     checkAllChecked();

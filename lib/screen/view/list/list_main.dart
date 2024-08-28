@@ -41,7 +41,7 @@ class ListMainView extends ConsumerWidget {
               Switch(
                 value: localListViewModel.isGridViewMode,
                 onChanged: (bool value) {
-                  localListViewModel.isGridViewMode = value;
+                  localListViewModel.toggleSelectedMode();
                 },
               ),
               const Text('그리드뷰 활성화'),
@@ -108,8 +108,8 @@ class ListMainView extends ConsumerWidget {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Container(
-            margin: EdgeInsets.all(8),
-            padding: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(border: Border.all(width: 1)),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.3,
