@@ -1,4 +1,5 @@
 import 'package:book/main.dart';
+import 'package:book/model(service)/book.dart';
 import 'package:book/model(service)/book_controller.dart';
 import 'package:book/screen/view/list/grid_view.dart';
 import 'package:book/screen/view/list/list_view.dart';
@@ -15,7 +16,6 @@ class ListMainView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    //var loacalBookController = Provider.of<BookController>(context);
     var localListViewModel = ref.watch(listViewModel);
     print('메인 리스트뷰 위젯 재실행');
 
@@ -72,8 +72,11 @@ class ListMainView extends ConsumerWidget {
                   )),
               PopupMenuItem(
                   onTap: () {
-                    context.read<Counter>().increment();
-                    print('버튼 on ${context.read<Counter>().num}');
+                    ref.read(notifierBookController).insertBook(Book("content",
+                        title: "title",
+                        author: "author",
+                        image: "image",
+                        publicher: "publicher"));
                   },
                   child: const Text(
                     '테스트 버튼',
