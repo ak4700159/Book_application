@@ -23,6 +23,7 @@ class BookController with ChangeNotifier {
   initBooks() async {
     await network.fetchBook(books);
     //await Future.delayed(const Duration(seconds: 5), () {});
+    notifyListeners();
     print('컨트롤러 초기화');
   }
 

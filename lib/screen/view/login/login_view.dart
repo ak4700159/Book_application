@@ -10,6 +10,9 @@ class LoginView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final loaclLoginViewModel = ref.read(loginViewModel);
+    final loacalBookController = ref.read(notifierBookController);
+    loacalBookController.initBooks();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
