@@ -1,20 +1,22 @@
+import 'package:book/main.dart';
 import 'package:book/model(service)/book.dart';
 import 'package:book/model(service)/book_controller.dart';
 import 'package:book/screen/view_model/list_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 
 // ------------  리스트뷰 ---------------
-class MyListView extends StatelessWidget {
+class MyListView extends ConsumerWidget {
   const MyListView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    var bookController = Provider.of<BookController>(context);
-    var listViewModel = Provider.of<ListViewModel>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    var loacalBookController = ref.watch(notifierBookController);
+    //var localListViewModel = ref.watch(listViewModel);
 
     // TODO: implement build
-    return bookController.books.isEmpty
+    return loacalBookController.books.isEmpty
         ? const Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -39,16 +41,16 @@ class MyListView extends StatelessWidget {
         : ListView.builder(
             itemBuilder: (BuildContext context, int index) {
               return MyListTile(
-                  book: bookController.books[index],
-                  onDeleteBook: bookController.deleteBook,
+                  book: loacalBookController.books[index],
+                  onDeleteBook: loacalBookController.deleteBook,
                   index: index);
             },
-            itemCount: bookController.books.length,
+            itemCount: loacalBookController.books.length,
           );
   }
 }
 
-class MyListTile extends StatelessWidget {
+class MyListTile extends ConsumerWidget {
   MyListTile(
       {super.key,
       required this.book,
@@ -59,8 +61,8 @@ class MyListTile extends StatelessWidget {
   Book book;
 
   @override
-  Widget build(BuildContext context) {
-    var listViewModel = Provider.of<ListViewModel>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    var loacalListViewModel = ref.watch(listViewModel);
 
     return Container(
       decoration: const BoxDecoration(
@@ -71,8 +73,8 @@ class MyListTile extends StatelessWidget {
           minTileHeight: 150,
           selectedColor: Colors.red,
           onLongPress: () {
-            listViewModel.toggleSelected(index);
-            print('제스처 감지 : ${listViewModel.isSeletedMode}');
+            loacalListViewModel.toggleSelected(index);
+            print('제스처 감지 : ${loacalListViewModel.isSeletedMode}');
           },
           onTap: () {
             Navigator.pushNamed(context, '/list/detail',
@@ -82,7 +84,7 @@ class MyListTile extends StatelessWidget {
           leading: Image.network(
             book.image,
             errorBuilder: (context, object, stack) {
-              return Icon(
+              return const Icon(
                 Icons.library_books,
                 size: 80,
               );
@@ -90,7 +92,7 @@ class MyListTile extends StatelessWidget {
           ),
           trailing: Row(
             mainAxisSize: MainAxisSize.min,
-            children: listViewModel.isSeletedMode
+            children: loacalListViewModel.isSeletedMode
                 ? [
                     IconButton(
                         onPressed: () {}, icon: const Icon(Icons.bookmark_add)),
@@ -101,9 +103,10 @@ class MyListTile extends StatelessWidget {
                       },
                     ),
                     Checkbox(
-                        value: listViewModel.selectedList[index],
+                        value: loacalListViewModel.selectedList[index],
                         onChanged: (value) {
-                          listViewModel.selectedList[index] = value ?? false;
+                          loacalListViewModel.selectedList[index] =
+                              value ?? false;
                         }),
                   ]
                 : [

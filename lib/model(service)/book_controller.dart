@@ -5,10 +5,11 @@ import 'package:http/http.dart' as http;
 import 'package:book/model(service)/book.dart';
 import 'package:book/model(service)/network.dart';
 import 'package:flutter/material.dart';
+import 'package:riverpod/riverpod.dart';
 
 // BookController 클래스는 Book 데이터들을 리스트 형태로 관리하는 모델이다.
 class BookController with ChangeNotifier {
-  final MyNetwork network = MyNetwork();
+  final BookNetwork network = BookNetwork();
   // 초기엔 빈리스트를 가지고 있다.
   // 이 어플에선 books에 데이터를 무조건 들어와 있다고 가정함.
   List<Book> books = [];
@@ -16,13 +17,13 @@ class BookController with ChangeNotifier {
   // 생성자에서 Books 리스트르 초기화 + 리스트뷰에서 사용될 상태 초기화
   BookController() {
     initBooks();
+    notifyListeners();
   }
 
   initBooks() async {
     await network.fetchBook(books);
     //await Future.delayed(const Duration(seconds: 5), () {});
     print('컨트롤러 초기화');
-    notifyListeners();
   }
 
   void updateBook() async {
@@ -42,8 +43,8 @@ class BookController with ChangeNotifier {
         ));
     if (result) {
       books.removeWhere((book) => book.title == title);
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   void insertBook(Book book) {

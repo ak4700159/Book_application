@@ -1,38 +1,30 @@
+import 'package:book/main.dart';
 import 'package:book/model(service)/book_controller.dart';
 import 'package:book/screen/view/list/grid_view.dart';
 import 'package:book/screen/view/list/list_view.dart';
 import 'package:book/screen/view_model/list_view_model.dart';
 import 'package:book/test_ground/test_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 
 // list_screen -> body : isGridView ? MyGirdView : MyListView
 // 위 위젯의 상위에서 상태를 동록한다. ( List<Book> : Provider 등록 )
-class ListMainView extends StatefulWidget {
+class ListMainView extends ConsumerWidget {
   const ListMainView({super.key});
 
   @override
-  State<ListMainView> createState() => _ListMainViewState();
-}
-
-class _ListMainViewState extends State<ListMainView> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    //var bookController = Provider.of<BookController>(context);
-    var listViewModel = Provider.of<ListViewModel>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    //var loacalBookController = Provider.of<BookController>(context);
+    var localListViewModel = ref.watch(listViewModel);
     print('메인 리스트뷰 위젯 재실행');
 
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
-        title: Text(
-          '리스트   ${context.watch<Counter>().num}',
-          style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        title: const Text(
+          '리스트',
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         leading: IconButton(
           onPressed: () {
@@ -47,11 +39,9 @@ class _ListMainViewState extends State<ListMainView> {
           Column(
             children: [
               Switch(
-                value: listViewModel.isGridViewMode,
+                value: localListViewModel.isGridViewMode,
                 onChanged: (bool value) {
-                  setState(() {
-                    listViewModel.isGridViewMode = value;
-                  });
+                  localListViewModel.isGridViewMode = value;
                 },
               ),
               const Text('그리드뷰 활성화'),
@@ -101,12 +91,12 @@ class _ListMainViewState extends State<ListMainView> {
             style: Theme.of(context).textTheme.titleLarge,
           ),
           Container(
-            margin: EdgeInsets.all(8),
-            padding: EdgeInsets.all(8),
+            margin: const EdgeInsets.all(8),
+            padding: const EdgeInsets.all(8),
             decoration: BoxDecoration(border: Border.all(width: 1)),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.3,
-            child: listViewModel.isGridViewMode
+            child: localListViewModel.isGridViewMode
                 ? const MyGridView()
                 : const MyListView(),
           ),
@@ -120,7 +110,7 @@ class _ListMainViewState extends State<ListMainView> {
             decoration: BoxDecoration(border: Border.all(width: 1)),
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height * 0.3,
-            child: !listViewModel.isGridViewMode
+            child: !localListViewModel.isGridViewMode
                 ? const MyGridView()
                 : const MyListView(),
           ),

@@ -6,6 +6,7 @@ class SplashView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // context 가 필요한 뷰모델이기에 Riverpod로 선언하지 않았다.
     SplashViewModel splashViewModel = SplashViewModel(context: context);
     splashViewModel.moveScreen();
     return Center(

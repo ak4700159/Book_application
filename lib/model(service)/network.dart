@@ -6,8 +6,8 @@ import 'package:dio/dio.dart';
 // URL = 식별자를 제외한 URI 주소
 // URI = 식별자까지 포함한 주소
 // 식별자 = query + fragment
-class MyNetwork {
-  MyNetwork();
+class BookNetwork {
+  BookNetwork();
   static const String dynamoDBuri =
       "https://iv4pz4hvxa.execute-api.ap-northeast-2.amazonaws.com/default/Book_dyamondDBFunc";
   static const String titleCheckUri =

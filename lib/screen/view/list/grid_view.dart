@@ -1,16 +1,18 @@
+import 'package:book/main.dart';
 import 'package:book/model(service)/book.dart';
 import 'package:book/model(service)/book_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 
 // ------------  그리드뷰 ---------------
-class MyGridView extends StatelessWidget {
+class MyGridView extends ConsumerWidget {
   const MyGridView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    var bookController = Provider.of<BookController>(context);
-    return bookController.books.isEmpty
+  Widget build(BuildContext context, WidgetRef ref) {
+    var localBookController = ref.watch(notifierBookController);
+    return localBookController.books.isEmpty
         ? const Center(
             child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -31,13 +33,13 @@ class MyGridView extends StatelessWidget {
             ],
           ))
         : GridView.builder(
-            itemCount: bookController.books.length,
+            itemCount: localBookController.books.length,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2),
             itemBuilder: (context, index) {
               return GridTile(
                   child: getBookGirdTile(
-                      bookController.books[index], context, () {}, index));
+                      localBookController.books[index], context, () {}, index));
             });
   }
 }

@@ -1,17 +1,19 @@
+import 'package:book/main.dart';
 import 'package:book/screen/view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider/provider.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends ConsumerWidget {
   LoginView({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    var loginViewModel = Provider.of<LoginViewModel>(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loaclLoginViewModel = ref.read(loginViewModel);
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '로그인 화면 [id : ${loginViewModel.id}, pwd : ${loginViewModel.passwd}]',
+          '로그인 화면 [id : ${loaclLoginViewModel.id}, pwd : ${loaclLoginViewModel.passwd}]',
           style: Theme.of(context).textTheme.titleLarge,
         ),
       ),
@@ -42,7 +44,7 @@ class LoginView extends StatelessWidget {
                 Navigator.pushNamedAndRemoveUntil(
                     context, '/list', (route) => false);
               },
-              child: Text('넘어가기'))
+              child: const Text('넘어가기'))
         ],
       ),
     );
