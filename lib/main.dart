@@ -12,7 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  runApp(const BookApp());
+  runApp(const BookApp()); 
 }
 
 // riverpod 구조 조정 중
